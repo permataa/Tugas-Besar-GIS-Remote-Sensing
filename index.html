@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas Besar</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <style>
+        #map{
+            height: 100vh;
+            width: 100%;
+        }
+
+        .info {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: rgb(255, 255, 255);
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+
+.legend {
+    line-height: 18px;
+    color: #555;
+}
+.legend i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7;
+}
+
+
+    </style>
+
+</head>
+<body>
+    <div id="map"></div>
+</body>
+</html>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="./data/line.js"></script>
+<script src="./data/point.js"></script>
+<script src="./data/polygon.js"></script>
+<script src="./data/nepaldata.js"></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+<script src="./data/provinsi-jatim.js"></script>
+<script>
+
+    /*===================================================
+                      OSM  LAYER               
+===================================================*/
+
+    var map = L.map('map').setView([-7.2270372, 111.4650057], 13);
+    /*,[-7.307264,112.7415808],[-7.1648345,112.6117374],[-7.1228244,112.3735888],[-7.4200323,111.3606042],[-7.2754417,112.6302808],*/
+var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+});
+osm.addTo(map);
+
+/*===================================================
+                      MARKER               
+===================================================*/
+
+var singleMarker = L.marker([-7.1560017, 111.8548478]);
+singleMarker.addTo(map);
+var popup = singleMarker.bindPopup('Angka Harapan sekolah kab.bojonegoro 12.34')
+popup.addTo(map);
+var AHSTuban = L.marker([-7.0021825, 111.7975456]);
+AHSTuban.addTo(map);
+var popup = AHSTuban.bindPopup('Angka Harapan sekolah kab.tuban 12.18')
+popup.addTo(map);
+var AHSLamongan = L.marker([-7.1228244, 112.3735888]);
+AHSLamongan.addTo(map);
+var popup = AHSLamongan.bindPopup('Angka Harapan sekolah kab.lamongan 13.45')
+popup.addTo(map);
+var JumlahsiswaTKBojonegoro = L.marker([-7.1520552, 111.8806444]);
+JumlahsiswaTKBojonegoro.addTo(map);
+var popup = JumlahsiswaTKBojonegoro.bindPopup('Jumlah murid tk kab.Bojonegoro 35.513')
+popup.addTo(map);
+var Jmltktuban = L.marker([-7.0121925, 111.7975460]);
+Jmltktuban.addTo(map);
+var popup = Jmltktuban.bindPopup('Jumlah murid tk kab.Tuban 35.168')
+popup.addTo(map);
+var Jmltklamongan = L.marker([-7.1217387, 112.4168512]);
+Jmltklamongan.addTo(map);
+var popup = Jmltklamongan.bindPopup('Jumlah murid tk kab.Lamongan 40.137')
+popup.addTo(map);
+var JumlahsiswaSMAbojonegoro = L.marker([-7.1472702, 111.8763895]);
+JumlahsiswaSMAbojonegoro.addTo(map);
+var popup = JumlahsiswaSMAbojonegoro.bindPopup('Jumlah murid SMA kab.Bojonegoro 14.829')
+popup.addTo(map);
+var Jmlsmatuban = L.marker([-6.9014563,112.0506417]);
+Jmlsmatuban.addTo(map);
+var popup = Jmlsmatuban.bindPopup('Jumlah murid SMA kab.Tuban 12.813')
+popup.addTo(map);
+var Jmlsmalamongan = L.marker([-7.1192556, 112.4117687]);
+Jmlsmalamongan.addTo(map);
+var popup = Jmlsmalamongan.bindPopup('Jumlah murid SMA kab.Lamongan 18.634')
+popup.addTo(map);
+
+
+/*===================================================
+                     TILE LAYER               
+===================================================*/
+
+var CartoDB_DarkMatter = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+subdomains: 'abcd',
+	maxZoom: 19
+});
+CartoDB_DarkMatter.addTo(map);
+
+// Google Map Layer
+
+googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+ });
+ googleStreets.addTo(map);
+
+ // Satelite Layer
+googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+   maxZoom: 20,
+   subdomains:['mt0','mt1','mt2','mt3']
+ });
+googleSat.addTo(map);
+
+var Stamen_Watercolor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
+ attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+subdomains: 'abcd',
+minZoom: 1,
+maxZoom: 16,
+ext: 'jpg'
+});
+Stamen_Watercolor.addTo(map);
+
+
+/*===================================================
+                      GEOJSON               
+===================================================*/
+
+var linedata = L.geoJSON(lineJSON).addTo(map);
+var pointdata = L.geoJSON(pointJSON).addTo(map);
+var nepalData = L.geoJSON(nepaldataa).addTo(map);
+var polygondata = L.geoJSON(polygonJSON,{
+    onEachFeature: function(feature,layer){
+        layer.bindPopup('<b>This is a </b>' + feature.properties.name)
+    },
+    style:{
+        fillColor: 'red',
+        fillOpacity:1,
+        color: 'black'
+    }
+}).addTo(map);
+
+/*===================================================
+                      LAYER CONTROL               
+===================================================*/
+
+var baseLayers = {
+    "Satellite":googleSat,
+    "Google Map":googleStreets,
+    "Water Color":Stamen_Watercolor,
+    "OpenStreetMap": osm,
+};
+
+var overlays = {
+    "Angka Harapan Sekolah Bojonegoro": singleMarker, AHSTuban, AHSLamongan, JumlahsiswaTKBojonegoro, Jmltktuban, Jmltklamongan, JumlahsiswaSMAbojonegoro, Jmlsmatuban, Jmlsmalamongan
+};
+
+L.control.layers(baseLayers, overlays).addTo(map);
+
+
+/*===================================================
+                      SEARCH BUTTON               
+===================================================*/
+
+L.Control.geocoder().addTo(map);
+
+
+/*===================================================
+                      Choropleth Map               
+===================================================*/
+
+L.geoJSON(statesData).addTo(map);
+
+
+function getColor(d) {
+    return d > 2000.00  ? '#31a354' :
+           d > 1800.00  ? '#dd1c77' :
+           d > 1700.00  ? '#756bb1' :
+                      '#e5f5e0';
+                      
+}
+
+function style(feature) {
+    return {
+        fillColor: getColor(feature.properties.density),
+        weight: 2,
+        opacity: 1,
+        color: 'red',
+        dashArray: '3',
+        fillOpacity: 0.7
+    };
+}
+
+L.geoJson(statesData, {style: style}).addTo(map);
+
+function highlightFeature(e) {
+    var layer = e.target;
+
+    layer.setStyle({
+        weight: 5,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 0.7
+    });
+
+    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+        layer.bringToFront();
+    }
+
+    info.update(layer.feature.properties);
+}
+
+function resetHighlight(e) {
+    geojson.resetStyle(e.target);
+    info.update();
+}
+
+var geojson;
+// ... our listeners
+geojson = L.geoJson(statesData);
+
+function zoomToFeature(e) {
+    map.fitBounds(e.target.getBounds());
+}
+
+function onEachFeature(feature, layer) {
+    layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight,
+        click: zoomToFeature
+    });
+}
+
+geojson = L.geoJson(statesData, {
+    style: style,
+    onEachFeature: onEachFeature
+}).addTo(map);
+
+var info = L.control();
+
+info.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this.update();
+    return this._div;
+};
+
+// method that we will use to update the control based on feature properties passed
+info.update = function (props) {
+    this._div.innerHTML = '<h4>East Java Area of territory</h4>' +  (props ?
+        '<b>' + props.name + '</b><br />' + props.density + ' wide / km<sup>2</sup>'
+        : 'Hover over a state');
+};
+
+info.addTo(map);
+
+var legend = L.control({position: 'bottomright'});
+
+legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = [],
+        labels = [];
+
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    }
+
+    return div;
+};
+
+legend.addTo(map);
+
+
+</script>
